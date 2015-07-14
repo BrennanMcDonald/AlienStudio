@@ -1,17 +1,36 @@
+::-webkit-scrollbar
+{
+	top:50px;
+}
+
+::-webkit-scrollbar-track
+{
+	top:50px;}
+
+::-webkit-scrollbar-thumb
+{
+	top:50px;
+}
+
 * {
     margin: 0px;
     padding: 0px;
     overflow: hidden;
+	letter-spacing: -0.5px;
 }
 
 div#TopBar {
     width: 100%;
     height: 80px;
     background: url("Images/TopBar.png");
-}
 
+}
+a.ng-binding {
+	cursor:pointer;
+}
 div#MiddleContent {
     display: inline;
+	font-family: 'Inconsolata';
 }
 
     div#MiddleContent div.Right {
@@ -25,26 +44,51 @@ div#MiddleContent {
 
     div#MiddleContent div#Left {
         float: left;
+		max-width:259px;
     }
+	    div#MiddleContent > div#Left > div#LeftBarPreview  > img {
+		width:210px;
+		padding-left:30px;
+		margin-top:120px;
+		height:auto;
+		position:absolute;
+		}
 
     div#MiddleContent div#Center {
+		overflow: scroll;
+		padding-top:25px;
         background: url("Images/CenterContent.png") no-repeat;
         position: relative;
     }
 
+        div#MiddleContent div#Center #mainContent a {
+			text-decoration:none;
+		}
         div#MiddleContent div#Center #mainContent {
-            padding: 28px;
-        }
+            padding: 5px 25px 5px 28px;
 
+        }
+		
+		div#MiddleContent div#Center #subTab {
+            background: url("Images/TabNoFocus.png");
+            width: 111px;
+            height: 19px;
+            padding-top: 2px;
+			position:relative;
+			display:inline;
+        }
+		
         div#MiddleContent div#Center #mainTab {
             background: url("Images/TabFocus.png");
             width: 111px;
             height: 19px;
-            left: 3px;
-            position: absolute;
-            top: 5px;
+            left: 262px;
+            position: fixed;
+            top: 84px;
             padding-top: 2px;
+			
         }
+
 
             div#MiddleContent div#Center #mainTab a {
                 margin-left: 5px;
@@ -105,7 +149,33 @@ div#FootBar {
 div#NavBar {
     cursor: pointer;
 }
-
+.in1 {
+	margin-left:30px;
+}
+.in2 {
+	margin-left:60px;
+}
+.in3 {
+	margin-left:90px;
+}
+.in4 {
+	margin-left:120px;
+}
+.in5 {
+	margin-left:150px;
+}
+.blue {
+	color:#0000ff;
+}
+.blue-green {
+	color: #2B91AF;
+}
+.black {
+	color:#000;
+}
+.red {
+	color:#b71515;
+}
 @media (max-width: 1150px) {
     div#Left {
         display: none;
