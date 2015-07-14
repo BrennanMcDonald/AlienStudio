@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="AlienTube.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Alien Studio</title>
+</head>
+<body ng-app="alienApp">
+    <div id="TopBar">
+
+    </div>
+    <div id="MiddleContent">
+        <div id="SuperRight">
+            <div id="NavBar">
+                <img src="Images/TopRightBar.png" />
+            </div>
+        </div>
+        <div class="Right">
+            <div id="SubredditList">
+                <div id="SearchHeader">
+                    <img src="Images/RightBarTop.png" id="SubRedditTop" />
+                    <img src="Images/SearchButton.png" id="SearchButton" />
+                    <input type="text" id="SubredditBar" />
+                </div>
+                <div class="list">
+
+                </div>
+            </div>
+
+        </div>
+        <div id="Left">
+            <img src="Images/LeftBar.png" />
+        </div>
+        <div id="Center" ng-controller="AlienController">
+            <r-Comment info="'asdf'">
+                {{$scope.data}}
+                <a ng-repeat="post in {{$scope.data}}">
+                    {{post}}
+                </a>
+            </r-Comment>
+        </div>
+
+
+
+    </div>
+    <div id="FootBar">
+
+    </div>
+</body>
+</html>
