@@ -35,34 +35,53 @@ $(document).ready(function () {
 *   Angular App Binding
 */
 
-var App = angular.module('alienApp', []);
+var Subreddit = function () {
 
-App.controller('AlienController', function ($scope) {
+};
+
+var App = angular.module('alienApp', []);
+var RedditPost = function (subreddit) {
+    id = subreddit.data.id;
+    author = subreddit.data.author;
+    name = subreddit.data.name;
+    title = subreddit.data.title;
+    url = subreddit.data.url;
+    subreddit = subreddit.data.subreddit;
+
+    console.log(subreddit);
+}
+App.controller('AlienController', ['$scope', '$http', '$templateCache', function ($scope, $http, $templateCache) {
     var self = $scope;
+    self.method = 'GET';
+    self.urlBase = 'http://www.reddit.com/r/';
+    self.urlExtension = '.json';
     self.phones = ["asdf", "qwer", "zxcv", "hjkl", "yuio"];
-});
+    self.SubReddits = ["All", "Gaming", "Askreddit", "Programming"];
+    self.CurrentSubreddit = "All";
+    self.CurrentPosts = [];
+
+
+    $scope.fetchSubreddits = function () {
+        $scope.code = null;
+        $scope.response = null;
+    };
+    $scope.setRedditContent = function (subReddit) {
+        $http.get(self.urlBase + subReddit + self.urlExtension).success(function (data, status) {
+            console.log(data);
+            $.each(data.data.children, function (i, d) {
+                self.CurrentPosts.push(RedditPost(d));
+            });
+        }).error(function (data, status) {
+            console.log(data);
+        });
+    };
+    $scope.setCurrentSub = function (sub) {
+        self.CurrentSubreddit = sub;
+        self.setRedditContent(sub);
+    }
+
+
+}]);
 
 App.$inject = ['$scope'];
 
-App.directive('rComment', ['$http', function ($http) {
-    return {
-        restrict: 'E',
-        transclude: true,
-        replace: true,
-        scope: {
-            info: "="
-        },
-        controller: function ($scope) {
-            $scope.url = "http://www.reddit.com/.json";
-            console.log($scope.info);
-
-            $http({ method: 'GET', url: $scope.url }).then(function (result) {
-                $scope.data = result.data.data.children;
-                console.log(result.data.data)
-                return result.data[0];
-            }, function (result) {
-                alert("Error: No data returned");
-            });
-        }
-    }
-}]);

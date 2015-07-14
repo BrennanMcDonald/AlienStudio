@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css" />
     <title>Alien Studio</title>
 </head>
-<body ng-app="alienApp">
+<body ng-app="alienApp" ng-controller="AlienController">
     <div id="TopBar">
 
     </div>
@@ -26,7 +26,7 @@
                     <input type="text" id="SubredditBar" />
                 </div>
                 <div class="list">
-
+                    <div class="subReddit" ng-repeat="subreddit in SubReddits" ng-click="setCurrentSub(subreddit)"><a href>{{subreddit}}</a></div>
                 </div>
             </div>
 
@@ -34,13 +34,15 @@
         <div id="Left">
             <img src="Images/LeftBar.png" />
         </div>
-        <div id="Center" ng-controller="AlienController">
-            <r-Comment info="'asdf'">
-                {{$scope.data}}
-                <a ng-repeat="post in {{$scope.data}}">
-                    {{post}}
+        <div id="Center">
+            <div id="mainTab">
+                <a>{{CurrentSubreddit}}</a>
+            </div>
+            <div id="mainContent">
+                <a>
+
                 </a>
-            </r-Comment>
+            </div>
         </div>
 
 

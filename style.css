@@ -28,10 +28,28 @@ div#MiddleContent {
     }
 
     div#MiddleContent div#Center {
-        padding:28px;
         background: url("Images/CenterContent.png") no-repeat;
-
+        position: relative;
     }
+
+        div#MiddleContent div#Center #mainContent {
+            padding: 28px;
+        }
+
+        div#MiddleContent div#Center #mainTab {
+            background: url("Images/TabFocus.png");
+            width: 111px;
+            height: 19px;
+            left: 3px;
+            position: absolute;
+            top: 5px;
+            padding-top: 2px;
+        }
+
+            div#MiddleContent div#Center #mainTab a {
+                margin-left: 5px;
+                margin-top: 3px;
+            }
 
     div#MiddleContent div img {
         display: inline-block;
@@ -41,6 +59,20 @@ div#SubredditList {
     background: url("Images/RightBarMiddle.png") repeat;
     height: 99px;
 }
+
+    div#SubredditList > .list > .subReddit {
+        margin-left: 20px;
+        margin-top: 5px;
+        padding-left: 60px;
+        width: 100%;
+        background: url("Images/Folder.png") no-repeat;
+        text-decoration: none;
+    }
+
+        div#SubredditList > .list > .subReddit > a {
+            text-decoration: none;
+            color: black;
+        }
 
     div#SubredditList #SubredditBar {
         position: absolute;
@@ -76,6 +108,6 @@ div#NavBar {
 
 @media (max-width: 1150px) {
     div#Left {
-        display:none;
+        display: none;
     }
 }
