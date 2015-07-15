@@ -149,6 +149,11 @@ div#FootBar {
 div#NavBar {
     cursor: pointer;
 }
+div#imageViewer {
+	background: url("Images/CenterContent.png") no-repeat;
+	background-size:cover;
+	padding:35px;
+}
 .in1 {
 	margin-left:30px;
 }

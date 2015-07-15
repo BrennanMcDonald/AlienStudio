@@ -1,11 +1,14 @@
 /*
 *   Document Resizing
 */
-
+	var g_id = atob("NTM5MGE0Y2MzZTFmNzRm");
+	var g_s = atob("MTAxZGEzZDVjZDM3MWY5YWNiNTY1ZDMxZThkZjg5MzZhNWQ4ZmUwNQ==");
 $(document).ready(function () {
     var above = ($("#TopBar").outerHeight() + $("#SubRedditTop").outerHeight());
     var navAbove = ($("#TopBar").outerHeight() + $("#SubRedditTop").outerHeight() + $("#NavBar").outerHeight());
     var center = ($("#TopBar").outerHeight() + $("#FootBar").outerHeight());
+
+
 
     $("#SubredditList").height($(window).outerHeight() - above);
     $("#Left").height($(window).outerHeight() - $("#TopBar").outerHeight());
@@ -38,8 +41,9 @@ $(document).ready(function () {
 var Subreddit = function () {
 
 };
-
+		
 var App = angular.module('alienApp', []);
+
 var RedditPost = function (subreddit) {
 	var self = this;
     self.id = subreddit.id;
@@ -59,6 +63,7 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
     self.CurrentSubreddit = "All";
     self.CurrentPosts = [];
 	self.cView = "sub";
+
     var toUTCDate = function(date){
         var _utc = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),  date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
         return _utc;
@@ -74,7 +79,7 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
     };
 	
     $scope.setRedditContent = function (subReddit) {
-			self.cView = "sub";
+		self.cView = "sub";
 		self.CurrentPosts = [];
         $http.get(self.urlBase + "/r/" + subReddit + self.urlExtension).success(function (data, status) {
             $.each(data.data.children, function (i, d) {
@@ -88,22 +93,61 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
     };
 	
 	$scope.setSelfPostContent = function (urlExtension) {
+
 		self.cView = "comment";
+		self.Thread = {};
 		self.CurrentPosts = [];
         $http.get(self.urlBase + urlExtension + self.urlExtension).success(function (data, status) {
 			console.log(data);
+			setCurrentSub = data[0].data.children[0].data.subreddit;
+			self.Thread = data[0];
             $.each(data[1].data.children, function (i, d) {
-				console.log(d.data)
                 self.CurrentPosts.push(d.data);
             });
-			console.log(self.CurrentPosts)
         }).error(function (data, status) {
             console.log(data);
         });
     };
 	
-	$scope.hidePostById = function(id) {
-		$("#" + id).hide();
+	$scope.showImageViewer = function(url) {
+
+		if (url.indexOf("http://imgur.com/") > -1 || url.indexOf("imgur.com/") > -1 ){
+			if (url.toLowerCase().indexOf("gallery") > -1){
+				console.log(url.toLowerCase().indexOf("http://imgur.com/gallery") + ("http://imgur.com/gallery").length+1)
+				url = url.substring(url.toLowerCase().indexOf("http://imgur.com/gallery") + ("http://imgur.com/gallery").length+1);
+				url = "https://api.imgur.com/3/gallery/" + url
+				var auth = 'Client-ID ' + g_id;
+				var req = {
+					method: "GET",
+					url: url,
+					headers: {
+						'Authorization' : auth,
+						'Accept' : 'application/json'
+					}
+				};
+				$http(req).success(function (data, status) {
+					$("#imageViewer img").attr("src");
+					$("#imageViewer img").attr("src", data.data.link);
+					$("#imageViewer").draggable({});
+					$("#imageViewer").show();
+				}).error(function (data, status) {
+				});
+			} else if(url.toLowerCase().indexOf(".png") > -1) {
+				$("#imageViewer img").attr("src");
+				$("#imageViewer img").attr("src", url);
+				$("#imageViewer").draggable({});
+				$("#imageViewer").show();
+			} else {
+				url = url.substring(url.toLowerCase().indexOf("http://imgur.com/") + ("http://imgur.com/").length);
+				url = "https://api.imgur.com/3/image/" + url
+			}
+		} else {
+			window.location.href = url;
+		}
+
+
+		
+
 	};
 	
     $scope.setCurrentSub = function (sub) {

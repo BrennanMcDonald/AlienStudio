@@ -4,12 +4,21 @@
 <head>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+
     <script src="AlienTube.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="style.css" />
     <title>Alien Studio</title>
 </head>
 <body ng-app="alienApp" ng-controller="AlienController">
+	<div id="imageViewer" style="display:none; position:fixed; z-index:200;">
+	<img />
+	<div class="close" style="position:absolute; top:0; right:0;background:white;padding:2px; cursor:pointer;" onclick="$(this).parent().hide()">
+		CLOSE X
+	</div>
+	</div>
+
     <div id="TopBar">
 
     </div>
@@ -49,20 +58,25 @@
 				<a><span class="blue">namespace</span> <b>AlienTube</b></a><br />	
 				<a>{</a></br>
 				<a class="in1">[<span class="blue-green">Serializable</span>]</a><br />	
-				<a class="in1"><span class="blue">public class</span> <span><b>AlienStudio</b></span> <b>:</b> <a class="blue-green" href="msoutlookit">MsOutlookit</a></a><br />	
+				<a class="in1"><span class="blue">public class</span> <span><b>AlienStudio</b></span> <b>:</b> <a class="blue-green" ng-click="setCurrentSub(CurrentSubreddit)">{{CurrentSubreddit}}</a></a><br />	
 				<a class="in1">{</a>
 			</div>
 			<p ng-repeat="post in CurrentPosts track by $index" ng-if="cView == 'sub'">
+
 			    <a class="in2" ng-click="setSelfPostContent(post.permalink)" id="{{post.id}}">
 					<span class="blue">public </span>{{post.id}} (<span class="blue-green">Subreddit</span> <span class="black">{{post.subreddit}}</span>)<br>
 					<span class="black in2">{</span><br>
 					<a class="in3"><span class="blue">string </span>Title = <span class="red">"{{post.title}}"</span>;</a><br/>
 					<a class="in3"><span class="blue">string </span>Author = <span class="red">"{{post.author}}"</span>;</a><br/>
 					<a class="in3"><span class="blue">int </span>Votes = <span class="red">"{{post.ups}}"</span>;</a><br/>
-					<span class="black in2">}</span><br>
+					<span class="black in2">}</span><br><br />	
                 </a>
 			</p>
+			<a class="in2"><span class="blue">{{Thread.kind}} </span>Body = <span class="red"></span>{{Thread.data.children[0].data.title}};</a><br/>
+			<a class="in2" ng-click="showImageViewer(Thread.data.children[0].data.url)"><span class="blue">{{Thread.kind}} </span>Url = <span class="red"></span>{{Thread.data.children[0].data.url}};</a><br/><br/>
+			
 			<p ng-repeat="post in CurrentPosts track by $index" ng-if="cView == 'comment'">
+
 			    <a class="in2" ng-click="hidePostById(post.id)" id="{{post.id}}">
 					<span class="blue">public </span>{{post.id}} (<span class="blue-green">Subreddit</span> <span class="black">{{post.subreddit}}</span>)<br>
 					<span class="black in2">{</span><br>
@@ -76,11 +90,11 @@
 					</span>
 					<a class="in3">}</a>
 					<br/>
-					<span class="black in2">}</span><br>
+					<span class="black in2">}</span><br>	<br />	
 					</a>
 					</p>
 					<a class="in1">}</a><br />	
-					<a>}</a><br />	
+					<a>}</a><br />
 				<br />
             </div>
         </div>
