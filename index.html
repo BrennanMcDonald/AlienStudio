@@ -19,9 +19,7 @@
 	</div>
 	</div>
 
-    <div id="TopBar">
-
-    </div>
+    <div id="TopBar"></div>
     <div id="MiddleContent">
         <div id="SuperRight">
             <div id="NavBar">
@@ -64,11 +62,12 @@
 			<p ng-repeat="post in CurrentPosts track by $index" ng-if="cView == 'sub'">
 
 			    <a class="in2" ng-click="setSelfPostContent(post.permalink)" id="{{post.id}}">
-					<span class="blue">public </span>{{post.id}} (<span class="blue-green">Subreddit</span> <span class="black">{{post.subreddit}}</span>)<br>
+					<span class="blue">public </span>{{post.author}} (<span class="blue-green">Subreddit</span> <span class="black" ng-click="setCurrentSub(post.subreddit)">{{post.subreddit}}</span>)<br>
 					<span class="black in2">{</span><br>
-					<a class="in3"><span class="blue">string </span>Title = <span class="red">"{{post.title}}"</span>;</a><br/>
-					<a class="in3"><span class="blue">string </span>Author = <span class="red">"{{post.author}}"</span>;</a><br/>
-					<a class="in3"><span class="blue">int </span>Votes = <span class="red">"{{post.ups}}"</span>;</a><br/>
+					<a class="in3"><span class="blue">string </span>Title = <span class="red" ng-click="((post.is_self)?'setSelfPostContent(post.permalink)':'showImageViewer(Thread.data.children[0].data.url))'">"{{post.title}}"</span>;</a><br/>
+					<a class="in3"><span class="blue">int </span>Votes = <span class="blue">{{post.ups}}</span>;</a><br/>
+					<a class="in3"><span class="blue-green">Type </span>linkType = <span class="blue">{{post.is_self?"Selfpost":"Link"}}</span>;</a><br/>
+
 					<span class="black in2">}</span><br><br />	
                 </a>
 			</p>
@@ -78,11 +77,10 @@
 			<p ng-repeat="post in CurrentPosts track by $index" ng-if="cView == 'comment'">
 
 			    <a class="in2" ng-click="hidePostById(post.id)" id="{{post.id}}">
-					<span class="blue">public </span>{{post.id}} (<span class="blue-green">Subreddit</span> <span class="black">{{post.subreddit}}</span>)<br>
+					<span class="blue">public </span>{{post.author}} (<span class="blue-green">Subreddit</span> <span class="black" ng-click="setCurrentSub(post.subreddit)">{{post.subreddit}}</span>)<br>
 					<span class="black in2">{</span><br>
 					<a class="in3"><span class="blue">string </span>Body = <span class="red">"{{post.body}}"</span>;</a><br/>
-					<a class="in3"><span class="blue">string </span>Author = <span class="red">"{{post.author}}"</span>;</a><br/>
-					<a class="in3"><span class="blue">int </span>Votes = <span class="red">"{{post.ups}}"</span>;</a><br/>
+					<a class="in3"><span class="blue">int </span>Votes = <span class="blue">{{post.ups}}</span>;</a><br/>
 					<a class="in3"><span class="blue">for </span>(int comment_index = 0; comment_index < {{post.replies.data.children.length}}; comment_index++)</a><br/>
 					<a class="in3">{</a><br/>
 					<span ng-repeat="subComment in post.replies.data.children track by $index">
