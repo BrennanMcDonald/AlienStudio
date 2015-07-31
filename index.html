@@ -7,6 +7,11 @@
     <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
 
     <script src="AlienTube.js"></script>
+    <script>
+		var AddSubreddit = function(s){
+			console.log(app);
+		}
+    </script>
 	<link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="style.css" />
     <title>Alien Studio</title>
@@ -31,10 +36,10 @@
                 <div id="SearchHeader">
                     <img src="Images/RightBarTop.png" id="SubRedditTop" />
                     <img src="Images/SearchButton.png" id="SearchButton" />
-                    <input type="text" id="SubredditBar" />
+                    <input type="text" id="SubredditBar" ng-blur="console.log($(this).val());"/>
                 </div>
                 <div class="list">
-                    <div class="subReddit" ng-repeat="subreddit in SubReddits" ng-click="setCurrentSub(subreddit)"><a href>{{subreddit}}</a></div>
+                    <div class="subReddit" ng-repeat="subreddit in SubReddits track by $index" ng-click="setCurrentSub(subreddit)"><a href>{{subreddit}}</a></div>
                 </div>
             </div>
 
@@ -64,7 +69,7 @@
 			    <a class="in2" ng-click="setSelfPostContent(post.permalink)" id="{{post.id}}">
 					<span class="blue">public </span>{{post.author}} (<span class="blue-green">Subreddit</span> <span class="black" ng-click="setCurrentSub(post.subreddit)">{{post.subreddit}}</span>)<br>
 					<span class="black in2">{</span><br>
-					<a class="in3"><span class="blue">string </span>Title = <span class="red" ng-click="((post.is_self)?'setSelfPostContent(post.permalink)':'showImageViewer(Thread.data.children[0].data.url))'">"{{post.title}}"</span>;</a><br/>
+					<a class="in3"><span class="blue">string </span>Title = <span class="red" ng-click="((post.is_self)?'setSelfPostContent(post.permalink)':'showImageViewer(Thread.data.children[0].data.url)')">"{{post.title}}"</span>;</a><br/>
 					<a class="in3"><span class="blue">int </span>Votes = <span class="blue">{{post.ups}}</span>;</a><br/>
 					<a class="in3"><span class="blue-green">Type </span>linkType = <span class="blue">{{post.is_self?"Selfpost":"Link"}}</span>;</a><br/>
 

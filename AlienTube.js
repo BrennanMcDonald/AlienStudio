@@ -53,6 +53,7 @@ var RedditPost = function (subreddit) {
     self.url = subreddit.url;
     self.subreddit = subreddit.subreddit;
 }
+
 App.controller('AlienController', ['$scope', '$http', '$templateCache', function ($scope, $http, $templateCache) {
     var self = $scope;
     self.method = 'GET';
@@ -77,7 +78,9 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
         $scope.code = null;
         $scope.response = null;
     };
-	
+	$scope.addSubredditToList = function(s){
+        self.SubReddits.push(s)
+    };
     $scope.setRedditContent = function (subReddit) {
 		self.cView = "sub";
 		self.CurrentPosts = [];
