@@ -145,13 +145,13 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
 				url = "https://api.imgur.com/3/image/" + url
 			}
 		} else {
-			window.location.href = url;
+			window.open(url, "_blank");
 		
         }
 	};
 
     $scope.goToUser = function(user) {
-        window.location.href = "http://reddit.com/u/" + user;
+        window.open("http://reddit.com/u/" + user, "_blank")
     };
 	
     $scope.setCurrentSub = function (sub) {
