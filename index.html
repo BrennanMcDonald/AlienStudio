@@ -35,8 +35,8 @@
             <div id="SubredditList">
                 <div id="SearchHeader">
                     <img src="Images/RightBarTop.png" id="SubRedditTop" />
-                    <img src="Images/SearchButton.png" id="SearchButton" />
-                    <input type="text" id="SubredditBar" ng-blur="console.log($(this).val());"/>
+                    <img src="Images/SearchButton.png" id="SearchButton" ng-click="addSubredditToList($('#SubredditBar').val())" />
+                    <input type="text" id="SubredditBar" ng-blur="addSubredditToList($('#SubredditBar').val())"/>
                 </div>
                 <div class="list">
                     <div class="subReddit" ng-repeat="subreddit in SubReddits track by $index" ng-click="setCurrentSub(subreddit)"><a href>{{subreddit}}</a></div>
@@ -67,7 +67,7 @@
 			<p ng-repeat="post in CurrentPosts track by $index" ng-if="cView == 'sub'">
 
 			    <a class="in2" ng-click="setSelfPostContent(post.permalink)" id="{{post.id}}">
-					<span class="blue">public </span>{{post.author}} (<span class="blue-green">Subreddit</span> <span class="black" ng-click="setCurrentSub(post.subreddit)">{{post.subreddit}}</span>)<br>
+					<span class="blue">public </span><a ng-click="goToUser(post.author)">{{post.author}}</a> (<span class="blue-green">Subreddit</span> <span class="black" ng-click="setCurrentSub(post.subreddit)">{{post.subreddit}}</span>)<br>
 					<span class="black in2">{</span><br>
 					<a class="in3"><span class="blue">string </span>Title = <span class="red" ng-click="((post.is_self)?'setSelfPostContent(post.permalink)':'showImageViewer(Thread.data.children[0].data.url)')">"{{post.title}}"</span>;</a><br/>
 					<a class="in3"><span class="blue">int </span>Votes = <span class="blue">{{post.ups}}</span>;</a><br/>

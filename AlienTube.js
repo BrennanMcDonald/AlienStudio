@@ -60,7 +60,7 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
     self.urlBase = 'http://www.reddit.com';
     self.urlExtension = '.json';
     self.phones = ["asdf", "qwer", "zxcv", "hjkl", "yuio"];
-    self.SubReddits = ["All", "Gaming", "Askreddit", "Programming"];
+    self.SubReddits = ["All", "Gaming", "Askreddit", "Programming", "TodayILearned","SubredditSimulator"];
     self.CurrentSubreddit = "All";
     self.CurrentPosts = [];
 	self.cView = "sub";
@@ -146,12 +146,13 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
 			}
 		} else {
 			window.location.href = url;
-		}
-
-
 		
-
+        }
 	};
+
+    $scope.goToUser = function(user) {
+        window.location.href = "http://reddit.com/u/" + user;
+    };
 	
     $scope.setCurrentSub = function (sub) {
         self.CurrentSubreddit = sub;
