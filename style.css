@@ -58,6 +58,8 @@ div#MiddleContent {
 		overflow: scroll;
 		padding-top:25px;
         background: url("Images/CenterContent.png") no-repeat;
+        background-size: cover;
+        
         position: relative;
     }
 

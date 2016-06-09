@@ -35,8 +35,8 @@
             <div id="SubredditList">
                 <div id="SearchHeader">
                     <img src="Images/RightBarTop.png" id="SubRedditTop" />
-                    <img src="Images/SearchButton.png" id="SearchButton" ng-click="addSubredditToList($('#SubredditBar').val())" />
-                    <input type="text" id="SubredditBar" ng-click="addSubredditToList($('#SubredditBar').val())"/>
+                    <img src="Images/SearchButton.png" id="SearchButton" ng-click="addSubredditToList(subredditText)"/>
+                    <input type="text" id="SubredditBar" ng-model="subredditText"/>
                 </div>
                 <div class="list">
                     <div class="subReddit" ng-repeat="subreddit in SubReddits track by $index" ng-click="setCurrentSub(subreddit)"><a href>{{subreddit}}</a></div>
