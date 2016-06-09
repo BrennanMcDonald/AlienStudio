@@ -31,6 +31,8 @@ $(document).ready(function () {
 
     $("#NavBar").on('click', function () {
         $("#SubredditList").animate({ width: 'toggle' }, 350);
+        $("#center").width($(window).outerWidth() - $("#Left").outerWidth())
+        $("#center").animate({width: $(window).outerWidth() - $("#Left").outerWidth()}, 350)
     });
 });
 
@@ -91,7 +93,7 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
             });
 			console.log(self.CurrentPosts)
         }).error(function (data, status) {
-            console.log(data);
+            self.CurrentPosts.push({author : "AlienStudio", title : "404 Subreddit Not Found", subreddit : "404"})
         });
     };
 	
@@ -156,6 +158,7 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
 	
     $scope.setCurrentSub = function (sub) {
         self.CurrentSubreddit = sub;
+
         self.setRedditContent(sub);
     }
 	
