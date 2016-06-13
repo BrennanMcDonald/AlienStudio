@@ -116,9 +116,8 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
 	
 	$scope.showImageViewer = function(url) {
 
-		if (url.indexOf("http://imgur.com/") > -1 || url.indexOf("imgur.com/") > -1 ){
+		if (url.indexOf("imgur.com") > -1 || url.indexOf("imgur.com") > -1 ){
 			if (url.toLowerCase().indexOf("gallery") > -1){
-				console.log(url.toLowerCase().indexOf("http://imgur.com/gallery") + ("http://imgur.com/gallery").length+1)
 				url = url.substring(url.toLowerCase().indexOf("http://imgur.com/gallery") + ("http://imgur.com/gallery").length+1);
 				url = "https://api.imgur.com/3/gallery/" + url
 				var auth = 'Client-ID ' + g_id;
@@ -136,8 +135,32 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
 					$("#imageViewer").draggable({});
 					$("#imageViewer").show();
 				}).error(function (data, status) {
+                    console.log("Error")
+                    console.log(data)
+                    console.log(status)
 				});
-			} else if(url.toLowerCase().indexOf(".png") > -1) {
+            } else if (url.toLowerCase().indexOf("/a/") > -1){
+                url = url.substring(url.toLowerCase().indexOf("http://imgur.com/a") + ("http://imgur.com/a").length+1);
+                url = "https://api.imgur.com/3/album/" + url
+                console.log(url)
+                var auth = 'Client-ID ' + g_id;
+                var req = {
+                    method: "GET",
+                    url: url,
+                    headers: {
+                        'Authorization' : auth,
+                        'Accept' : 'application/json'
+                    }
+                };
+                $http(req).success(function (data, status) {
+                    console.log(data);
+                    $("#imageViewer img").attr("src");
+                    $("#imageViewer img").attr("src", data.images[0].link);
+                    $("#imageViewer").draggable({});
+                    $("#imageViewer").show();
+                }).error(function (data, status) {
+                });
+			} else if(url.toLowerCase().indexOf(".png") > -1 || url.toLowerCase().indexOf(".jpg") > -1) {
 				$("#imageViewer img").attr("src");
 				$("#imageViewer img").attr("src", url);
 				$("#imageViewer").draggable({});
@@ -145,12 +168,24 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
 			} else {
 				url = url.substring(url.toLowerCase().indexOf("http://imgur.com/") + ("http://imgur.com/").length);
 				url = "https://api.imgur.com/3/image/" + url
+                $("#imageViewer img").attr("src");
+                $("#imageViewer img").attr("src", url);
+                $("#imageViewer img").width(500);
+                $("#imageViewer img").height(500);
+                $("#imageViewer").draggable({});
+                $("#imageViewer").show();
+                console.log(url)
 			}
 		} else {
 			window.open(url, "_blank");
 		
         }
 	};
+
+    $scope.navigateToPermalink = function(perma){
+        console.log(perma)
+        window.open("http://reddit.com" + perma, "_blank")
+    }
 
     $scope.goToUser = function(user) {
         window.open("http://reddit.com/u/" + user, "_blank")

@@ -76,7 +76,7 @@
 					<span class="black in2">}</span><br><br />	
                 </a>
 			</p>
-			<a class="in2"><span class="blue">{{Thread.kind}} </span>Body = <span class="red"></span>{{Thread.data.children[0].data.title}};</a><br/>
+			<a class="in2" ng-click="navigateToPermalink(Thread.data.children[0].data.permalink);"><span class="blue">{{Thread.kind}} </span>Body = <span class="red"></span>{{Thread.data.children[0].data.title}};</a><br/>
 			<a class="in2" ng-click="showImageViewer(Thread.data.children[0].data.url)"><span class="blue">{{Thread.kind}} </span>Url = <span class="red"></span>{{Thread.data.children[0].data.url}};</a><br/><br/>
 			
 			<p ng-repeat="post in CurrentPosts track by $index" ng-if="cView == 'comment'">
