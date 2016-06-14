@@ -146,7 +146,23 @@ div#FootBar {
     height: 231px;
     width: 100%;
     background: url("Images/BottomBar.png");
+    padding
 }
+    div#FootBar > div#FootBarContent {
+        overflow: scroll;
+        margin: 73px 14px 0px 6px;
+        height: 122px;
+    }
+            div#FootBar > div#FootBarContent > div {
+                padding:10px;
+                border: solid 1px black;
+                border-bottom: none;
+            }
+            div#FootBar > div#FootBarContent > div:last-child {
+                padding:10px;
+                border: solid 1px black;
+
+            }
 
 div#NavBar {
     cursor: pointer;

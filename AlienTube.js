@@ -75,6 +75,10 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
     var millisToUTCDate = function(millis){
         return toUTCDate(new Date(millis));
     };
+    
+    $scope.RangeOf = function(i){
+        return Array(i)
+    }
 
     $scope.fetchSubreddits = function () {
         $scope.code = null;
