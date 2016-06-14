@@ -7,16 +7,14 @@ All Contributions are welcome this is simply a fun project that I was inspired t
 
 # How to add custom subreddits
 
-*Step 1*
+![Tada](http://i.imgur.com/d8Rq4N0.png)
 
-![Step 1](http://i.imgur.com/OSWveps.png)
+# Roadmap
 
-*Step 2*
-
-![Step 2](http://i.imgur.com/d8Rq4N0.png)
-
-*Step 3*
-
-![Step 3](http://i.imgur.com/tx97wRX.png)
-
-*Simple as cake 🎂* 
+• Add a back/history function
+• Save state upon reload
+• Handle videos similar to images
+• Impliment useage for File menu
+• Use tabs for multiple subs/links
+• On Post page, add a next/prev post button?
+• Split into multiple HTML pages
