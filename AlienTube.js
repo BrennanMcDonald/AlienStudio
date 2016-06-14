@@ -55,14 +55,7 @@ var RedditPost = function (subreddit) {
     self.url = subreddit.url;
     self.subreddit = subreddit.subreddit;
 }
-App.directive('myRepeatDirective', function() {
-  return function(scope, element, attrs) {
-    if (scope.$last){
-      window.alert("im the last!");
-    }
-  };
-})
-s
+
 App.controller('AlienController', ['$scope', '$http', '$templateCache', function ($scope, $http, $templateCache) {
     var self = $scope;
     self.method = 'GET';
