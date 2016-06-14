@@ -75,7 +75,7 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
     var millisToUTCDate = function(millis){
         return toUTCDate(new Date(millis));
     };
-    
+
     $scope.RangeOf = function(i){
         return Array(i)
     }
@@ -119,8 +119,8 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
     };
 	
 	$scope.showImageViewer = function(url) {
-
 		if (url.indexOf("imgur.com") > -1 || url.indexOf("imgur.com") > -1 ){
+            console.log("Handling Imgur Link")
 			if (url.toLowerCase().indexOf("gallery") > -1){
 				url = url.substring(url.toLowerCase().indexOf("http://imgur.com/gallery") + ("http://imgur.com/gallery").length+1);
 				url = "https://api.imgur.com/3/gallery/" + url
@@ -159,7 +159,9 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
                 $http(req).success(function (data, status) {
                     console.log(data);
                     $("#imageViewer img").attr("src");
-                    $("#imageViewer img").attr("src", data.images[0].link);
+                    $("#imageViewer img").attr("src", data.data.images[0].link);
+                    $("#imageViewer img").css('height','500px')
+                    $("#imageViewer img").css('width','auto')
                     $("#imageViewer").draggable({});
                     $("#imageViewer").show();
                 }).error(function (data, status) {
@@ -172,15 +174,41 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
 			} else {
 				url = url.substring(url.toLowerCase().indexOf("http://imgur.com/") + ("http://imgur.com/").length);
 				url = "https://api.imgur.com/3/image/" + url
+                var req = {
+                    method: "GET",
+                    url: url,
+                    headers: {
+                        'Authorization' : auth,
+                        'Accept' : 'application/json'
+                    }
+                };
+                $http(req).success(function (data, status) {
+                    $("#imageViewer img").attr("src");
+                    $("#imageViewer img").attr("src", data.data.link);
+                    $("#imageViewer img").css('height','500px')
+                    $("#imageViewer img").css('width','auto')
+                    $("#imageViewer").draggable({});
+                    $("#imageViewer").show();
+                    console.log(url)
+                }).error(function (data, status) {
+                    console.log("Error")
+                    console.log(data)
+                    console.log(status)
+                });
+
+
+			}
+		} else if(url.toLowerCase().indexOf(".png") > -1 || url.toLowerCase().indexOf(".jpg") > -1) {
+                console.log("Handling Generic Image Link")
                 $("#imageViewer img").attr("src");
                 $("#imageViewer img").attr("src", url);
-                $("#imageViewer img").width(500);
-                $("#imageViewer img").height(500);
-                $("#imageViewer").draggable({});
+                $("#imageViewer img").css('height','500px')
+                $("#imageViewer img").css('width','auto')
                 $("#imageViewer").show();
-                console.log(url)
-			}
-		} else {
+        } else {
+            console.log("Handling Non Imgur Link")
+            console.log(url)
+            console.log(url.toLowerCase().indexOf(".jpg") > -1)
 			window.open(url, "_blank");
 		
         }
