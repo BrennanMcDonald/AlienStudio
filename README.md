@@ -12,9 +12,16 @@ All Contributions are welcome this is simply a fun project that I was inspired t
 # Roadmap
 
 • Add a back/history function
+
 • Save state upon reload
+
 • Handle videos similar to images
+
 • Impliment useage for File menu
+
 • Use tabs for multiple subs/links
+
 • On Post page, add a next/prev post button?
+
 • Split into multiple HTML pages
+
