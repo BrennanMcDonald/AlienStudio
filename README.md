@@ -23,5 +23,4 @@ All Contributions are welcome this is simply a fun project that I was inspired t
 
 • On Post page, add a next/prev post button?
 
-• Split into multiple HTML pages
 
