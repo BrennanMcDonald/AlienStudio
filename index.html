@@ -120,8 +120,8 @@
 		</div>
 		<div id="FootBar">
 			<div id="FootBarContent">
-				<div ng-repeat="i in RangeOf(10) track by $index">
-					{{ $index }}
+				<div ng-repeat="i in PatchNotes" style="">
+					<img src="{{ i.committer.avatar_url }}" style="width:30px; height:30px;"/><a style="padding:40px;"> : {{ i.sha | first:7 }} : {{ i.commit.message }}</a>
 				</div>
 			</div>
 		</div>

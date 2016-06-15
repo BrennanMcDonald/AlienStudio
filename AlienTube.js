@@ -66,6 +66,7 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
     self.CurrentSubreddit = "All";
     self.CurrentPosts = [];
 	self.cView = "sub";
+    self.PatchNotes = [];
 
     var toUTCDate = function(date){
         var _utc = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),  date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
@@ -91,15 +92,28 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
         return Array(i)
     }
 
+    $scope.GetRecentPatchNotes = function(){
+        url = "https://api.github.com/repos/brennanmcdonald/alienstudio/commits"
+        $http.get(url).success(function (data, status) {
+            $.each(data, function (i, d) {
+                console.log(d)
+                self.PatchNotes.push(d);
+            });
+        }).error(function (data, status) {
+        });
+    }
+
     $scope.fetchSubreddits = function () {
         $scope.code = null;
         $scope.response = null;
     };
+
 	$scope.addSubredditToList = function(s){
         if (!containsObject(s,self.SubReddits)){
             self.SubReddits.push(s)
         }
     };
+
     $scope.setRedditContent = function (subReddit) {
 		self.cView = "sub";
 		self.CurrentPosts = [];
@@ -235,7 +249,7 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
     }
 	
 	$scope.setRedditContent("All")
-	
+	$scope.GetRecentPatchNotes()
 	$scope.setPreviewImage = function(htmlString){
 		var imageLink = htmlString[0].resolutions[htmlString[0].resolutions.length - 1].url
 		$("#LeftBarPreview").html("<img src='"+imageLink+"' />");
@@ -263,6 +277,12 @@ App.filter('cut', function () {
             return value + (tail || ' …');
         };
     });
+
+App.filter('first', function(){
+        return function(value, i){
+            return value.substr(0,i);
+        }
+    })
 	
 App.$inject = ['$scope'];
 
