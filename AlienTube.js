@@ -76,6 +76,17 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
         return toUTCDate(new Date(millis));
     };
 
+    function containsObject(obj, list) {
+        var i;
+        for (i = 0; i < list.length; i++) {
+            if (list[i] === obj) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     $scope.RangeOf = function(i){
         return Array(i)
     }
@@ -85,17 +96,17 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
         $scope.response = null;
     };
 	$scope.addSubredditToList = function(s){
-        self.SubReddits.push(s)
+        if (!containsObject(s,self.SubReddits)){
+            self.SubReddits.push(s)
+        }
     };
     $scope.setRedditContent = function (subReddit) {
 		self.cView = "sub";
 		self.CurrentPosts = [];
         $http.get(self.urlBase + "/r/" + subReddit + self.urlExtension).success(function (data, status) {
             $.each(data.data.children, function (i, d) {
-				console.log(d.data)
                 self.CurrentPosts.push(d.data);
             });
-			console.log(self.CurrentPosts)
         }).error(function (data, status) {
             self.CurrentPosts.push({author : "AlienStudio", title : "404 Subreddit Not Found", subreddit : "404"})
         });
@@ -107,7 +118,6 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
 		self.Thread = {};
 		self.CurrentPosts = [];
         $http.get(self.urlBase + urlExtension + self.urlExtension).success(function (data, status) {
-			console.log(data);
 			setCurrentSub = data[0].data.children[0].data.subreddit;
 			self.Thread = data[0];
             $.each(data[1].data.children, function (i, d) {
@@ -189,7 +199,6 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
                     $("#imageViewer img").css('width','auto')
                     $("#imageViewer").draggable({});
                     $("#imageViewer").show();
-                    console.log(url)
                 }).error(function (data, status) {
                     console.log("Error")
                     console.log(data)
@@ -206,16 +215,12 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
                 $("#imageViewer img").css('width','auto')
                 $("#imageViewer").show();
         } else {
-            console.log("Handling Non Imgur Link")
-            console.log(url)
-            console.log(url.toLowerCase().indexOf(".jpg") > -1)
 			window.open(url, "_blank");
 		
         }
 	};
 
     $scope.navigateToPermalink = function(perma){
-        console.log(perma)
         window.open("http://reddit.com" + perma, "_blank")
     }
 
@@ -225,14 +230,13 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
 	
     $scope.setCurrentSub = function (sub) {
         self.CurrentSubreddit = sub;
-
+        $scope.addSubredditToList(sub);
         self.setRedditContent(sub);
     }
 	
 	$scope.setRedditContent("All")
 	
 	$scope.setPreviewImage = function(htmlString){
-		console.log(htmlString[0].resolutions);
 		var imageLink = htmlString[0].resolutions[htmlString[0].resolutions.length - 1].url
 		$("#LeftBarPreview").html("<img src='"+imageLink+"' />");
 	}
