@@ -167,8 +167,10 @@ div#FootBar {
 div#NavBar {
     cursor: pointer;
 }
-div#imageViewer {
-	background: url("Images/CenterContent.png") no-repeat;
+div#ImageViewer,
+div#VideoViewer {
+    border: solid 1px white;
+	background: black;
 	background-size:cover;
 }
 .in1 {

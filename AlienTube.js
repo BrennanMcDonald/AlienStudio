@@ -142,92 +142,71 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
         });
     };
 	
+    showVideoViewer = function(video_id){
+        var ampersandPosition = video_id.indexOf("?v=");
+        if(ampersandPosition != -1) {
+          video_id = video_id.substring(ampersandPosition+3);
+        }
+        console.log(video_id)
+        $("#VideoViewer iframe").attr("src");
+        $("#VideoViewer iframe").attr("src", "https://www.youtube.com/embed/" + video_id);
+        $("#VideoViewer").draggable({});
+        $("#VideoViewer").show();
+    }
+    showImageViewer = function(url){
+        $("#ImageViewer img").attr("src");
+        $("#ImageViewer img").attr("src", url);
+        $("#ImageViewer img").css('height','500px')
+        $("#ImageViewer img").css('width','auto')
+        $("#ImageViewer").draggable({});
+        $("#ImageViewer").show();
+    }
 	$scope.showImageViewer = function(url) {
-		if (url.indexOf("imgur.com") > -1 || url.indexOf("imgur.com") > -1 ){
-            console.log("Handling Imgur Link")
-			if (url.toLowerCase().indexOf("gallery") > -1){
-				url = url.substring(url.toLowerCase().indexOf("http://imgur.com/gallery") + ("http://imgur.com/gallery").length+1);
-				url = "https://api.imgur.com/3/gallery/" + url
-				var auth = 'Client-ID ' + g_id;
-				var req = {
-					method: "GET",
-					url: url,
-					headers: {
-						'Authorization' : auth,
-						'Accept' : 'application/json'
-					}
-				};
-				$http(req).success(function (data, status) {
-					$("#imageViewer img").attr("src");
-					$("#imageViewer img").attr("src", data.data.link);
-					$("#imageViewer").draggable({});
-					$("#imageViewer").show();
-				}).error(function (data, status) {
-                    console.log("Error")
-                    console.log(data)
-                    console.log(status)
-				});
-            } else if (url.toLowerCase().indexOf("/a/") > -1){
-                url = url.substring(url.toLowerCase().indexOf("http://imgur.com/a") + ("http://imgur.com/a").length+1);
-                url = "https://api.imgur.com/3/album/" + url
-                console.log(url)
-                var auth = 'Client-ID ' + g_id;
-                var req = {
-                    method: "GET",
-                    url: url,
-                    headers: {
-                        'Authorization' : auth,
-                        'Accept' : 'application/json'
+        var auth = 'Client-ID ' + g_id;
+        if (url.indexOf("youtube.com/") > -1){
+            showVideoViewer(url)
+        }
+        else if (url.indexOf("imgur.com") > -1 || url.indexOf("imgur.com") > -1 ){
+            if (url.lastIndexOf("/")+1 < url.lastIndexOf(".")){
+                url = url.substring(url.lastIndexOf("/")+1,url.lastIndexOf("."));
+            } else {
+                url = url.substring(url.lastIndexOf("/")+1)
+            }
+            url = "https://api.imgur.com/3/image/" + url
+            var req = {
+                method: "GET",
+                url: url,
+                headers: {
+                    'Authorization' : auth,
+                    'Accept' : 'application/json'
+                }
+            };
+            $http(req).success(function (response, status) {
+                showImageViewer(response.data.link);
+            }).error(function (data, status) {
+                if (status == 404){
+                    if (url.lastIndexOf("/")+1 < url.lastIndexOf(".")){
+                        url = url.substring(url.lastIndexOf("/")+1,url.lastIndexOf("."));
+                    } else {
+                        url = url.substring(url.lastIndexOf("/")+1)
                     }
-                };
-                $http(req).success(function (data, status) {
-                    console.log(data);
-                    $("#imageViewer img").attr("src");
-                    $("#imageViewer img").attr("src", data.data.images[0].link);
-                    $("#imageViewer img").css('height','500px')
-                    $("#imageViewer img").css('width','auto')
-                    $("#imageViewer").draggable({});
-                    $("#imageViewer").show();
-                }).error(function (data, status) {
-                });
-			} else if(url.toLowerCase().indexOf(".png") > -1 || url.toLowerCase().indexOf(".jpg") > -1) {
-				$("#imageViewer img").attr("src");
-				$("#imageViewer img").attr("src", url);
-				$("#imageViewer").draggable({});
-				$("#imageViewer").show();
-			} else {
-				url = url.substring(url.toLowerCase().indexOf("http://imgur.com/") + ("http://imgur.com/").length);
-				url = "https://api.imgur.com/3/image/" + url
-                var req = {
-                    method: "GET",
-                    url: url,
-                    headers: {
-                        'Authorization' : auth,
-                        'Accept' : 'application/json'
-                    }
-                };
-                $http(req).success(function (data, status) {
-                    $("#imageViewer img").attr("src");
-                    $("#imageViewer img").attr("src", data.data.link);
-                    $("#imageViewer img").css('height','500px')
-                    $("#imageViewer img").css('width','auto')
-                    $("#imageViewer").draggable({});
-                    $("#imageViewer").show();
-                }).error(function (data, status) {
-                    console.log("Error")
-                    console.log(data)
-                    console.log(status)
-                });
-
-
-			}
+                    url = "https://api.imgur.com/3/gallery/" + url
+                    req.url = url;
+                    $http(req).success(function (response, status) {
+                        showImageViewer(response.data.images[0].link);
+                    }).error(function (data, status) {
+                        console.error("Error Status code: " + status)
+                    });
+                }
+                console.error("Error Status code: " + status)
+            });
 		} else if(url.toLowerCase().indexOf(".png") > -1 || url.toLowerCase().indexOf(".jpg") > -1) {
                 console.log("Handling Generic Image Link")
-                $("#imageViewer img").attr("src");
-                $("#imageViewer img").attr("src", url);
-                $("#imageViewer img").css('height','500px')
-                $("#imageViewer img").css('width','auto')
-                $("#imageViewer").show();
+                $("#ImageViewer img").attr("src");
+                $("#ImageViewer img").attr("src", url);
+                $("#ImageViewer img").css('height','500px')
+                $("#ImageViewer img").css('width','auto')
+                $("#ImageViewer").show();
         } else {
 			window.open(url, "_blank");
 		

@@ -17,9 +17,15 @@
 		<title>Alien Studio</title>
 	</head>
 	<body ng-app="alienApp" ng-controller="AlienController">
-		<div id="imageViewer" style="display:none; position:fixed; z-index:200;">
+		<div id="ImageViewer" style="display:none; position:fixed; z-index:200;">
 			<img style="padding:20px;"/>
 			<div class="close" style="position:absolute; top:0; right:0;background:white;padding:2px; cursor:pointer;" onclick="$(this).parent().hide()">
+				X
+			</div>
+		</div>
+		<div id="VideoViewer" style="display:none; position:fixed; z-index:200; padding:10px;padding-top:30px;">
+			<iframe width="560" height="315" frameborder="0" allowfullscreen></iframe>
+			<div class="close" style="position:absolute; top:0; right:0;background:white;padding:2px; cursor:pointer;" onclick="$(this).siblings('iframe').attr('src','');$(this).parent().hide()">
 				X
 			</div>
 		</div>
