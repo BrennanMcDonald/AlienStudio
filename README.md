@@ -3,7 +3,7 @@ A re-skinned Reddit browser made to look like visual studio made completely out 
 
 All Contributions are welcome this is simply a fun project that I was inspired to create after using MsOutlookit
 
-[AlienStudio Demo](http://brennanmcdonald.github.io/AlienStudio/index.html)
+[AlienStudio Demo](http://brennanmcdonald.github.io/AlienStudio/)
 
 # How to add custom subreddits
 
