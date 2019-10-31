@@ -59,7 +59,7 @@ var RedditPost = function (subreddit) {
 App.controller('AlienController', ['$scope', '$http', '$templateCache', function ($scope, $http, $templateCache) {
     var self = $scope;
     self.method = 'GET';
-    self.urlBase = 'http://www.reddit.com';
+    self.urlBase = 'https://www.reddit.com';
     self.urlExtension = '.json';
     self.phones = ["asdf", "qwer", "zxcv", "hjkl", "yuio"];
     self.SubReddits = ["All", "Gaming", "Askreddit", "Programming", "TodayILearned","SubredditSimulator"];
@@ -214,11 +214,11 @@ App.controller('AlienController', ['$scope', '$http', '$templateCache', function
 	};
 
     $scope.navigateToPermalink = function(perma){
-        window.open("http://reddit.com" + perma, "_blank")
+        window.open("https://reddit.com" + perma, "_blank")
     }
 
     $scope.goToUser = function(user) {
-        window.open("http://reddit.com/u/" + user, "_blank")
+        window.open("https://reddit.com/u/" + user, "_blank")
     };
 	
     $scope.setCurrentSub = function (sub) {
